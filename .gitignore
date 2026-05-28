@@ -1,0 +1,7 @@
+# Compiled binary
+/eth-gaslimit-avg
+
+# Multica agent runtime
+/.agent_context/
+/.multica/
+/CLAUDE.md
