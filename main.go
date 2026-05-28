@@ -33,7 +33,7 @@ func main() {
 		log.Fatalf("chain has only %d blocks, need at least %d", latest+1, *n)
 	}
 
-	var sum uint64
+	var sumLimit, sumUsed uint64
 	fmt.Printf("Blocks (latest=%d):\n", latest)
 	for i := 0; i < *n; i++ {
 		num := latest - uint64(i)
@@ -42,8 +42,11 @@ func main() {
 			log.Fatalf("get header %d: %v", num, err)
 		}
 		fmt.Printf("  #%d  gasLimit=%d  gasUsed=%d\n", num, header.GasLimit, header.GasUsed)
-		sum += header.GasLimit
+		sumLimit += header.GasLimit
+		sumUsed += header.GasUsed
 	}
-	avg := float64(sum) / float64(*n)
-	fmt.Printf("\nAverage gasLimit over last %d blocks: %.2f\n", *n, avg)
+	avgLimit := float64(sumLimit) / float64(*n)
+	avgUsed := float64(sumUsed) / float64(*n)
+	fmt.Printf("\nAverage gasLimit over last %d blocks: %.2f\n", *n, avgLimit)
+	fmt.Printf("Average gasUsed  over last %d blocks: %.2f\n", *n, avgUsed)
 }
